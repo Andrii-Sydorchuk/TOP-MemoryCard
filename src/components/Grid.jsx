@@ -12,6 +12,7 @@ export default function Grid({ scoreState, bestScoreState }) {
   const [bestScore, setBestScore] = bestScoreState;
   const [clickedCards, setClickedCards] = useState([]);
   const [cards, setCards] = useState(CONFIG.CARDS);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const client = createClient(
@@ -38,6 +39,7 @@ export default function Grid({ scoreState, bestScoreState }) {
       );
 
       setCards(updatedCards);
+      setIsLoaded(true);
     }
 
     fetchCards();
@@ -67,19 +69,24 @@ export default function Grid({ scoreState, bestScoreState }) {
   }
 
   return (
-    <div className="grid">
-      {cards.map((card) => {
-        return (
-          <Card
-            key={card.key}
-            name={card.name}
-            src={card.src}
-            alt={card.alt}
-            handleClick={() => handleClick(card.key)}
-            handleKeydown={(e) => handleKeydown(e, card.key)}
-          />
-        );
-      })}
-    </div>
+    <>
+      {!isLoaded && <div className="loading-circle"></div>}
+      {isLoaded && (
+        <div className="grid">
+          {cards.map((card) => {
+            return (
+              <Card
+                key={card.key}
+                name={card.name}
+                src={card.src}
+                alt={card.alt}
+                handleClick={() => handleClick(card.key)}
+                handleKeydown={(e) => handleKeydown(e, card.key)}
+              />
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 }
