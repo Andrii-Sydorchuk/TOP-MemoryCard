@@ -3,13 +3,45 @@ import Card from "./Card";
 import "../styles/Grid.css";
 import { useState } from "react";
 import { shuffleCards } from "../utils/shuffle";
+import { useEffect } from "react";
+
+import { createClient } from "pexels";
 
 export default function Grid({ scoreState, bestScoreState }) {
   const [score, setScore] = scoreState;
   const [bestScore, setBestScore] = bestScoreState;
   const [clickedCards, setClickedCards] = useState([]);
+  const [cards, setCards] = useState(CONFIG.CARDS);
 
-  const cards = shuffleCards(CONFIG.CARDS);
+  useEffect(() => {
+    const client = createClient(
+      "6tGQj5JGBsl5nMpOtqpHhXCDklK7GRHqWJdjWcie2aWDW5h9pQgsMxuB",
+    );
+
+    async function fetchCards() {
+      const updatedCards = await Promise.all(
+        CONFIG.CARDS.map(async (card) => {
+          const result = await client.photos.search({
+            query: card.name,
+            per_page: 1,
+            orientation: "landscape",
+          });
+
+          const photo = result.photos[0];
+
+          return {
+            ...card,
+            src: photo.src.original,
+            alt: photo.alt,
+          };
+        }),
+      );
+
+      setCards(updatedCards);
+    }
+
+    fetchCards();
+  }, []);
 
   function handleClick(key) {
     const isClicked = clickedCards.includes(key);
@@ -24,6 +56,7 @@ export default function Grid({ scoreState, bestScoreState }) {
 
     setScore(score + 1);
     setClickedCards([...clickedCards, key]);
+    setCards(shuffleCards(cards));
   }
 
   return (
@@ -33,6 +66,8 @@ export default function Grid({ scoreState, bestScoreState }) {
           <Card
             key={card.key}
             name={card.name}
+            src={card.src}
+            alt={card.alt}
             handleClick={() => handleClick(card.key)}
           />
         );
