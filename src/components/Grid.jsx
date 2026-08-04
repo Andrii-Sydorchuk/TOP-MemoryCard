@@ -59,6 +59,13 @@ export default function Grid({ scoreState, bestScoreState }) {
     setCards(shuffleCards(cards));
   }
 
+  function handleKeydown(e, key) {
+    if (e.code !== "Enter" && e.code !== "Space") return;
+
+    e.target.blur();
+    handleClick(key);
+  }
+
   return (
     <div className="grid">
       {cards.map((card) => {
@@ -69,6 +76,7 @@ export default function Grid({ scoreState, bestScoreState }) {
             src={card.src}
             alt={card.alt}
             handleClick={() => handleClick(card.key)}
+            handleKeydown={(e) => handleKeydown(e, card.key)}
           />
         );
       })}
