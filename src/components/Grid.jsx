@@ -2,11 +2,14 @@ import { CONFIG } from "../utils/config";
 import Card from "./Card";
 import "../styles/Grid.css";
 import { useState } from "react";
+import { shuffleCards } from "../utils/shuffle";
 
 export default function Grid({ scoreState, bestScoreState }) {
   const [score, setScore] = scoreState;
   const [bestScore, setBestScore] = bestScoreState;
   const [clickedCards, setClickedCards] = useState([]);
+
+  const cards = shuffleCards(CONFIG.CARDS);
 
   function handleClick(key) {
     const isClicked = clickedCards.includes(key);
@@ -25,7 +28,7 @@ export default function Grid({ scoreState, bestScoreState }) {
 
   return (
     <div className="grid">
-      {CONFIG.CARDS.map((card) => {
+      {cards.map((card) => {
         return (
           <Card
             key={card.key}
