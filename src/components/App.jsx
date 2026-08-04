@@ -12,7 +12,10 @@ export default function App() {
       <Header score={score} bestScore={bestScore} />
 
       <main className="main">
-        <Grid />
+        <Grid
+          scoreState={[score, setScore]}
+          bestScoreState={[bestScore, setBestScore]}
+        />
       </main>
 
       <footer className="footer">
