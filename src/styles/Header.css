@@ -1,4 +1,6 @@
 .header-top {
   display: flex;
   justify-content: space-between;
+  font-weight: bold;
+  text-transform: uppercase;
 }
