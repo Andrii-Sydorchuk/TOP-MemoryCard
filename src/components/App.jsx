@@ -1,7 +1,6 @@
 import { useState } from "react";
-
 import Header from "./Header";
-
+import Grid from "./Grid";
 import "../styles/App.css";
 
 export default function App() {
@@ -13,70 +12,7 @@ export default function App() {
       <Header score={score} bestScore={bestScore} />
 
       <main className="main">
-        <div className="grid">
-          <div className="card">
-            <figure className="card-figure">
-              <img src={null} alt="" className="card-img" />
-              <figcaption className="card-caption">Caption Example</figcaption>
-            </figure>
-          </div>
-
-          <div className="card">
-            <figure className="card-figure">
-              <img src={null} alt="" className="card-img" />
-              <figcaption className="card-caption">Caption Example</figcaption>
-            </figure>
-          </div>
-
-          <div className="card">
-            <figure className="card-figure">
-              <img src={null} alt="" className="card-img" />
-              <figcaption className="card-caption">Caption Example</figcaption>
-            </figure>
-          </div>
-
-          <div className="card">
-            <figure className="card-figure">
-              <img src={null} alt="" className="card-img" />
-              <figcaption className="card-caption">Caption Example</figcaption>
-            </figure>
-          </div>
-
-          <div className="card">
-            <figure className="card-figure">
-              <img src={null} alt="" className="card-img" />
-              <figcaption className="card-caption">Caption Example</figcaption>
-            </figure>
-          </div>
-
-          <div className="card">
-            <figure className="card-figure">
-              <img src={null} alt="" className="card-img" />
-              <figcaption className="card-caption">Caption Example</figcaption>
-            </figure>
-          </div>
-
-          <div className="card">
-            <figure className="card-figure">
-              <img src={null} alt="" className="card-img" />
-              <figcaption className="card-caption">Caption Example</figcaption>
-            </figure>
-          </div>
-
-          <div className="card">
-            <figure className="card-figure">
-              <img src={null} alt="" className="card-img" />
-              <figcaption className="card-caption">Caption Example</figcaption>
-            </figure>
-          </div>
-
-          <div className="card">
-            <figure className="card-figure">
-              <img src={null} alt="" className="card-img" />
-              <figcaption className="card-caption">Caption Example</figcaption>
-            </figure>
-          </div>
-        </div>
+        <Grid />
       </main>
 
       <footer className="footer">
