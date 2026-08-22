@@ -13,9 +13,7 @@ export default function Grid({ score, setScore, handleGameOver }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const client = createClient(
-      "6tGQj5JGBsl5nMpOtqpHhXCDklK7GRHqWJdjWcie2aWDW5h9pQgsMxuB",
-    );
+    const client = createClient(import.meta.env.VITE_PEXELS_API_KEY);
 
     async function fetchCards() {
       const updatedCards = await Promise.all(
