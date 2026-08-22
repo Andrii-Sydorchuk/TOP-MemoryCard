@@ -1,0 +1,33 @@
+.gameover-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.gameover-title {
+  font-size: 44px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.gameover-score {
+  font-size: 24px;
+}
+
+.restart-btn {
+  padding: 1rem 2.5rem;
+  border: 1px solid #000;
+  background-color: #fff;
+  border-radius: .5rem;
+  cursor: pointer;
+  transition: transform .2s ease-in-out, background-color .2s ease-in-out,color .2s ease-in-out;
+  will-change: transform;
+}
+
+.restart-btn:hover,
+.restart-btn:focus {
+  background-color: #000;
+  color: #fff;
+  transform: scale(1.1);
+}
