@@ -7,16 +7,9 @@ import { useEffect } from "react";
 
 import { createClient } from "pexels";
 
-export default function Grid({
-  scoreState,
-  bestScoreState,
-  setIsGameOver,
-  setLastScore,
-}) {
-  const [score, setScore] = scoreState;
-  const [bestScore, setBestScore] = bestScoreState;
-  const [clickedCards, setClickedCards] = useState([]);
+export default function Grid({ score, setScore, handleGameOver }) {
   const [cards, setCards] = useState(CONFIG.CARDS);
+  const [clickedCards, setClickedCards] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -51,15 +44,8 @@ export default function Grid({
   }, []);
 
   function handleClick(key) {
-    const isClicked = clickedCards.includes(key);
-
-    if (isClicked) {
-      if (score > bestScore) setBestScore(score);
-      setLastScore(score);
-      setIsGameOver(true);
-      setScore(0);
-      setClickedCards([]);
-
+    if (clickedCards.includes(key)) {
+      handleGameOver(score);
       return;
     }
 
@@ -70,11 +56,7 @@ export default function Grid({
     setCards(shuffleCards(cards));
 
     if (newScore === CONFIG.CARDS.length) {
-      if (newScore > bestScore) setBestScore(newScore);
-
-      setLastScore(newScore);
-      setScore(0);
-      setIsGameOver(true);
+      handleGameOver(newScore);
     }
   }
 

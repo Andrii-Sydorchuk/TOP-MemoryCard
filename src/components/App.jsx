@@ -10,6 +10,13 @@ export default function App() {
   const [bestScore, setBestScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
 
+  function handleGameOver(finalScore) {
+    if (finalScore > bestScore) setBestScore(finalScore);
+    setLastScore(finalScore);
+    setIsGameOver(true);
+    setScore(0);
+  }
+
   return (
     <div className="container">
       <Header score={score} bestScore={bestScore} />
@@ -19,10 +26,9 @@ export default function App() {
           <GameOver lastScore={lastScore} setIsGameOver={setIsGameOver} />
         ) : (
           <Grid
-            scoreState={[score, setScore]}
-            bestScoreState={[bestScore, setBestScore]}
-            setIsGameOver={setIsGameOver}
-            setLastScore={setLastScore}
+            score={score}
+            setScore={setScore}
+            handleGameOver={handleGameOver}
           />
         )}
       </main>
