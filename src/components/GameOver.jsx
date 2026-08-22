@@ -1,9 +1,9 @@
 import "../styles/GameOver.css";
 import { CONFIG } from "../utils/config";
 
-export default function GameOver({ lastScore, setIsGameOver, setScore }) {
+export default function GameOver({ lastScore, setIsGameOver }) {
   const won = lastScore === CONFIG.CARDS.length;
-  if (won) setScore(0);
+
   return (
     <div className="gameover-container">
       {won ? (

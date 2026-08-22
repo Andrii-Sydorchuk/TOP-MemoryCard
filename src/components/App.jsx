@@ -16,11 +16,7 @@ export default function App() {
 
       <main className="main">
         {isGameOver ? (
-          <GameOver
-            lastScore={lastScore}
-            setIsGameOver={setIsGameOver}
-            setScore={setScore}
-          />
+          <GameOver lastScore={lastScore} setIsGameOver={setIsGameOver} />
         ) : (
           <Grid
             scoreState={[score, setScore]}

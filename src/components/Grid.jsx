@@ -73,6 +73,7 @@ export default function Grid({
       if (newScore > bestScore) setBestScore(newScore);
 
       setLastScore(newScore);
+      setScore(0);
       setIsGameOver(true);
     }
   }
