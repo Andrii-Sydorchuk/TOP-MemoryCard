@@ -1,6 +1,21 @@
+import { KeyboardEventHandler, MouseEventHandler } from "react";
 import "../styles/Card.css";
 
-export default function Card({ name, src, alt, handleClick, handleKeydown }) {
+interface CardProps {
+  name: string;
+  src: string;
+  alt: string;
+  handleClick: MouseEventHandler<HTMLDivElement>;
+  handleKeydown: KeyboardEventHandler<HTMLDivElement>;
+}
+
+export default function Card({
+  name,
+  src,
+  alt,
+  handleClick,
+  handleKeydown,
+}: CardProps) {
   return (
     <div
       className="card"
