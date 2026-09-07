@@ -1,3 +1,5 @@
+import { Card } from "../types";
+
 const cars = [
   "Ferrari F40",
   "Lamborghini Countach",
@@ -12,9 +14,11 @@ const cars = [
 
 export const CONFIG = {
   CARDS: cars.map((car) => {
-    return {
+    const card: Card = {
       name: car,
       key: crypto.randomUUID(),
     };
+
+    return card;
   }),
 };
