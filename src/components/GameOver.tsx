@@ -1,7 +1,12 @@
 import "../styles/GameOver.css";
 import { CONFIG } from "../utils/config";
 
-export default function GameOver({ lastScore, setIsGameOver }) {
+interface GameOverProps {
+  lastScore: number;
+  setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function GameOver({ lastScore, setIsGameOver }: GameOverProps) {
   const won = lastScore === CONFIG.CARDS.length;
 
   return (
