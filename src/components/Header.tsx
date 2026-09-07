@@ -1,6 +1,11 @@
 import "../styles/Header.css";
 
-export default function Header({ score, bestScore }) {
+interface HeaderProps {
+  score: number;
+  bestScore: number;
+}
+
+export default function Header({ score, bestScore }: HeaderProps) {
   return (
     <header className="header">
       <div className="header-top">
