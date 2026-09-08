@@ -55,6 +55,10 @@ export default function Grid({ score, setScore, handleGameOver }: GridProps) {
   }, []);
 
   function handleClick(key: string) {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     if (clickedCards.includes(key)) {
       handleGameOver(score);
       return;
