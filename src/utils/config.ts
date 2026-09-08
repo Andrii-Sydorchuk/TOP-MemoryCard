@@ -1,4 +1,4 @@
-import { Card } from "../types";
+import { CardItem } from "../types";
 
 const cars = [
   "Ferrari F40",
@@ -14,7 +14,7 @@ const cars = [
 
 export const CONFIG = {
   CARDS: cars.map((car) => {
-    const card: Card = {
+    const card: CardItem = {
       name: car,
       key: crypto.randomUUID(),
     };

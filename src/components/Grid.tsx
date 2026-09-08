@@ -1,22 +1,28 @@
 import { CONFIG } from "../utils/config";
-import Card from "./Card";
 import "../styles/Grid.css";
 import { useState } from "react";
-import { shuffleCards } from "../utils/shuffle";
+import { shuffleArray } from "../utils/shuffleArray";
 import { useEffect } from "react";
-
 import { createClient } from "pexels";
+import { CardItem } from "../types";
+import Card from "./Card";
 
-export default function Grid({ score, setScore, handleGameOver }) {
-  const [cards, setCards] = useState(CONFIG.CARDS);
-  const [clickedCards, setClickedCards] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+interface GridProps {
+  score: number;
+  setScore: React.Dispatch<React.SetStateAction<number>>;
+  handleGameOver: (lastScore: number) => void;
+}
+
+export default function Grid({ score, setScore, handleGameOver }: GridProps) {
+  const [cards, setCards] = useState<CardItem[]>(CONFIG.CARDS);
+  const [clickedCards, setClickedCards] = useState<string[]>([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     const client = createClient(import.meta.env.VITE_PEXELS_API_KEY);
 
     async function fetchCards() {
-      const updatedCards = await Promise.all(
+      const updatedCards: CardItem[] = await Promise.all(
         CONFIG.CARDS.map(async (card) => {
           const result = await client.photos.search({
             query: card.name,
@@ -24,12 +30,19 @@ export default function Grid({ score, setScore, handleGameOver }) {
             orientation: "landscape",
           });
 
-          const photo = result.photos[0];
+          if ("photos" in result && result.photos.length > 0) {
+            const photo = result.photos[0];
+            return {
+              ...card,
+              src: photo!.src.original,
+              alt: photo!.alt,
+            };
+          }
 
           return {
             ...card,
-            src: photo.src.original,
-            alt: photo.alt,
+            src: "",
+            alt: card.name,
           };
         }),
       );
@@ -41,7 +54,7 @@ export default function Grid({ score, setScore, handleGameOver }) {
     fetchCards();
   }, []);
 
-  function handleClick(key) {
+  function handleClick(key: string) {
     if (clickedCards.includes(key)) {
       handleGameOver(score);
       return;
@@ -51,17 +64,17 @@ export default function Grid({ score, setScore, handleGameOver }) {
 
     setScore(newScore);
     setClickedCards([...clickedCards, key]);
-    setCards(shuffleCards(cards));
+    setCards(shuffleArray(cards));
 
     if (newScore === CONFIG.CARDS.length) {
       handleGameOver(newScore);
     }
   }
 
-  function handleKeydown(e, key) {
+  function handleKeydown(e: React.KeyboardEvent<HTMLDivElement>, key: string) {
     if (e.code !== "Enter" && e.code !== "Space") return;
 
-    e.target.blur();
+    e.currentTarget.blur();
     handleClick(key);
   }
 
@@ -75,8 +88,8 @@ export default function Grid({ score, setScore, handleGameOver }) {
               <Card
                 key={card.key}
                 name={card.name}
-                src={card.src}
-                alt={card.alt}
+                src={card.src ?? ""}
+                alt={card.alt ?? ""}
                 handleClick={() => handleClick(card.key)}
                 handleKeydown={(e) => handleKeydown(e, card.key)}
               />
