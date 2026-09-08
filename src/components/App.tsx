@@ -36,7 +36,11 @@ export default function App() {
       <footer className="footer">
         <p className="footer-credit">
           Photos provided by
-          <a href="https://www.pexels.com/" target="_blank">
+          <a
+            href="https://www.pexels.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Pexels
           </a>
         </p>
