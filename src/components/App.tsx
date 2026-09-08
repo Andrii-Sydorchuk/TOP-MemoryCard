@@ -5,12 +5,12 @@ import GameOver from "./GameOver";
 import "../styles/App.css";
 
 export default function App() {
-  const [score, setScore] = useState(0);
-  const [lastScore, setLastScore] = useState(0);
-  const [bestScore, setBestScore] = useState(0);
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [score, setScore] = useState<number>(0);
+  const [lastScore, setLastScore] = useState<number>(0);
+  const [bestScore, setBestScore] = useState<number>(0);
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
-  function handleGameOver(finalScore) {
+  function handleGameOver(finalScore: number) {
     if (finalScore > bestScore) setBestScore(finalScore);
     setLastScore(finalScore);
     setIsGameOver(true);
