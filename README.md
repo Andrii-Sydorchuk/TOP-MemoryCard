@@ -1,12 +1,14 @@
 # 🃏 Memory Card Game
 
-A React memory card game where players click on cards without repeating a selection. Card images are fetched live from the Pexels API — one photo per car, searched by name.
+A React + TypeScript memory card game where players click on cards without repeating a selection. Card images are fetched live from the Pexels API — one photo per car, searched by name.
 
 Built as part of [The Odin Project](https://www.theodinproject.com/) curriculum.
 
 **[Live Demo](https://topmemorycardsay.netlify.app/)**
 
 ## Screenshots
+
+**Gameplay**
 ![Gameplay screenshot](./screenshots/gameplay.png)
 
 ## Features
@@ -18,10 +20,11 @@ Built as part of [The Odin Project](https://www.theodinproject.com/) curriculum.
 - Game over screen distinguishing between a win and a loss with a restart button
 - Loading indicator while images are being fetched
 - Keyboard accessible — cards can be activated with Enter or Space
+- Graceful fallback if a card's photo search returns no results
 
 ## Tech Stack
 
-- **React 19** + **Vite** — UI and build tooling
+- **React 19** + **TypeScript** + **Vite** — UI and build tooling
 - **Pexels API** — live card images fetched by car name
 - **CSS** — component-scoped stylesheets
 - **ESLint** — linting
@@ -31,24 +34,29 @@ Built as part of [The Odin Project](https://www.theodinproject.com/) curriculum.
 ```
 src/
 ├── components/
-│   ├── App.jsx       # root component — score state and game flow
-│   ├── Grid.jsx      # fetches images, renders card grid, handles click logic
-│   ├── Card.jsx      # individual card with image and caption
-│   ├── Header.jsx    # displays current and best score + game rules
-│   └── GameOver.jsx  # win/lose screen with restart button
+│   ├── App.tsx       # root component — score state and game flow
+│   ├── Grid.tsx      # fetches images, renders card grid, handles click logic
+│   ├── Card.tsx      # individual card with image and caption
+│   ├── Header.tsx    # displays current and best score + game rules
+│   └── GameOver.tsx  # win/lose screen with restart button
+├── types/
+│   └── index.ts      # shared TypeScript interfaces (CardItem)
 ├── utils/
-│   ├── config.js     # card definitions (car names + generated keys)
-│   └── shuffle.js    # Fisher-Yates-style card shuffle
+│   ├── config.ts        # card definitions (car names + generated keys)
+│   └── shuffleArray.ts  # Fisher-Yates-style card shuffle
 └── styles/           # per-component CSS files
 ```
 
 ## Technical Notes
 
+- Fully typed with TypeScript — component props, state, and card data are covered by explicit interfaces (`CardItem`, `GridProps`)
 - Card images are fetched in parallel with `Promise.all` on mount, each queried by car name via the Pexels API
+- Falls back to an empty image and the card's name as alt text if a Pexels search returns no photos
 - Score and best score live in `App` and are passed down to `Header`, `Grid`, and `GameOver`
-- Cards are initialised with `crypto.randomUUID()` keys in `config.js` to ensure stable identity across shuffles
+- Cards are initialised with `crypto.randomUUID()` keys in `config.ts` to ensure stable identity across shuffles
 - Shuffle generates a full permutation of indices before remapping to avoid partial shuffles
 - Game over is triggered either by clicking a previously clicked card or by reaching the maximum score
+- `tsc --noEmit` used for type-checking without emitting build output
 
 ## Getting Started
 
@@ -73,9 +81,10 @@ npm run dev
 Other scripts:
 
 ```bash
-npm run build    # production build
-npm run preview  # preview the production build
-npm run lint     # run ESLint
+npm run build      # production build
+npm run preview    # preview the production build
+npm run lint        # run ESLint
+npm run typecheck  # run TypeScript compiler checks
 ```
 
 ## Acknowledgements
